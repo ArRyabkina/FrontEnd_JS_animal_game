@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img src="ava/wolf.jpg">
+    <img src="ava/horse.jpg">
+    <img src="ava/lisa.jpg">
+    <img src="ava/rabit.jpg">
+    <div class="transf">
+        <p>
+            Choose your animal
+        </p>
+    </div>
+
+    <script>
+        let img = document.querySelectorAll('img');
+        let text = document.createElement('p');
+        document.body.appendChild(text);
+        text.classList.add('text')
+        text.innerHTML = 'Выбрать'
+
+        for (let i = 0; i < img.length; i++) {
+            img[i].classList.add('img');;
+            img[i].onmouseenter = function() {
+                text.style.opacity = 1;
+                text.style.top = img[i].getBoundingClientRect().top + 54 + 'px';
+                text.style.left = img[i].getBoundingClientRect().left + img[i].getBoundingClientRect().width / 2 - 50 + 'px'
+            }
+            img[i].onclick = function() {
+                for (let j = 0; j < img.length; j++) {
+                    img[j].style.display = 'none';
+                }
+
+                text.innerHTML = ' '
+                let message = document.querySelector('.transf')
+                message.innerHTML = '<p>Transformation!</p>'
+                message.style.display = 'none'
+                message.style.margin = '0'
+                message.style.position = 'absolute'
+                message.style.top = '40%'
+                message.style.left = '30%'
+                document.body.style.backgroundImage = 'url(' + 'bg.jpg' + ')'
+                var animal = ['wolf', 'hourse', 'lisa', 'rabit']
+                var choosen = document.createElement('img')
+                choosen.src = animal[i] + '.gif'
+                document.body.appendChild(choosen)
+                choosen.classList.add('rabit')
+                choosen.onmouseenter = function() {
+                    message.style.display = 'block'
+                    setTimeout(function() {
+                        message.style.display = 'none'
+                    }, 1500)
+                    let number = Math.round(Math.random() * 2)
+                    while (number == i) {
+                        number = Math.round(Math.random() * 2)
+                    }
+                    i = number
+                    choosen.src = animal[number] + ".gif"
+                }
+                setInterval(action, 10)
+
+                function action() {
+                    if (choosen.getBoundingClientRect().left < window.innerWidth * 0.2) {
+                        choosen.style.transition = '0.1s'
+                        choosen.style.transform = 'scale(-1, 1)';
+                        setTimeout(function() {
+                            choosen.style.transition = Math.random() * 2 + 6 + 's'
+                            choosen.style.width = window.innerWIdth * Math.random() * 0.1;
+                            choosen.style.marginLeft = '120%';
+                            choosen.style.marginTop = Math.random() * 70 + 5 + '%'
+                        }, 200)
+
+                    }
+                    if (choosen.getBoundingClientRect().left > window.innerWidth * 0.8) {
+                        choosen.style.transition = '0.1s'
+                        choosen.style.transform = 'scale(1, 1)';
+                        setTimeout(function() {
+                            choosen.style.transition = Math.random() * 2 + 6 + 's'
+                            choosen.style.width = window.innerWIdth * Math.random() * 0.1;
+                            choosen.style.marginLeft = '-50%';
+                            choosen.style.marginTop = Math.random() * 70 + 5 + '%';
+                        }, 100)
+
+                    }
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
